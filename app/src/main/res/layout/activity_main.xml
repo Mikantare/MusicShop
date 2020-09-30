@@ -68,10 +68,11 @@
     <Spinner
         android:id="@+id/spinnerSelectItem"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:entries="@array/music_tool" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageViewGoods"
         android:layout_width="100sp"
         android:layout_height="100sp"
         android:layout_gravity="center_horizontal"
