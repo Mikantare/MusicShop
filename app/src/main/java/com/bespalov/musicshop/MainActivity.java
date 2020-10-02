@@ -2,10 +2,12 @@ package com.bespalov.musicshop;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -21,11 +23,14 @@ public class MainActivity extends AppCompatActivity {
     private Spinner spinnerSelectItem;
     private TextView textViewPrice;
     private ImageView imageViewGoods;
+    private EditText editTextTextName;
 
     private HashMap hashMapTools;
 
     private int quantity = 0;
     private Double price;
+    private Double summ;
+    private String godsName;
 
 
     @Override
@@ -37,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         spinnerSelectItem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String godsName = spinnerSelectItem.getSelectedItem().toString();
+                godsName = spinnerSelectItem.getSelectedItem().toString();
                 Toast.makeText(MainActivity.this, "" + godsName, Toast.LENGTH_SHORT).show();
                 price = ((double) hashMapTools.get(godsName));
                 setPrice();
@@ -70,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         spinnerSelectItem = findViewById(R.id.spinnerSelectItem);
         imageViewGoods = findViewById(R.id.imageViewGoods);
         textViewPrice = findViewById(R.id.textViewPrice);
+        editTextTextName = findViewById(R.id.editTextTextName);
     }
 
     public void creatMap () {
@@ -81,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setPrice() {
-        Double summ = price * quantity;
+        summ = price * quantity;
         textViewPrice.setText(summ.toString());
     }
 
@@ -98,5 +104,14 @@ public class MainActivity extends AppCompatActivity {
             textViewQuantity.setText("" + quantity);
             setPrice();
         }
+    }
+
+    public void addToCart(View view) {
+        Intent intent = new Intent(this, OrderActivity.class);
+        intent.putExtra("name", editTextTextName.getText().toString().trim());
+        intent.putExtra("quantity", quantity);
+        intent.putExtra("godsName", godsName);
+        intent.putExtra("summ", summ);
+        startActivity(intent);
     }
 }
